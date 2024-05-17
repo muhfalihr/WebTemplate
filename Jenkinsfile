@@ -4,28 +4,7 @@ pipeline {
         registryCredential = 'harbor'
         dockerImage = ''
     }
-    agent {
-        kubernetes {
-            yaml """
-            apiVersion: v1
-            kind: Pod
-            spec:
-              containers:
-              - name: docker
-                image: docker:19.03.12
-                command:
-                - cat
-                tty: true
-                volumeMounts:
-                - name: docker-socket
-                  mountPath: /var/run/docker.sock
-            volumes:
-            - name: docker-socket
-              hostPath:
-                path: /var/run/docker.sock
-            """
-        }
-    }
+    agent { label 'node1' }
     stages {
         stage('Versioning') {
             steps {
