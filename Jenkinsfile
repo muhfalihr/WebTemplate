@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        image = "10.100.1.171/muhfalihr/test1"
+        image = "10.100.1.171/muhfalihr/webtemplate"
         registryCredential = 'harbor'
         dockerImage = ''
     }
@@ -9,10 +9,10 @@ pipeline {
         stage('Versioning') {
             steps {
                 script {
-                    env.IMAGE_VERSION = input message: 'Image versioning...', ok: 'Take this !!',
+                    env.IMAGE_VERSION = input message: 'Image versioning...', ok: 'Take this',
                             parameters: [
                                 string(name: 'Version',
-                                defaultValue: '1.',
+                                defaultValue: '1',
                                 description: 'Image versioning, input to your desire')]
                 }
             }
