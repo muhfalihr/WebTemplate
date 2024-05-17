@@ -1,7 +1,7 @@
 pipeline {
     environment {
         IMAGE_NAME = "10.100.1.171/muhfalihr/test1"
-        REGISTRY_CRED = credentials('harbor')
+        REGISTRY_CRED = 'harbor'
         IMAGE_VERSION = "1"
         DOCKER_IMAGE = ''
     }
