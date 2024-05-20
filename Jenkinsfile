@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry( 'http://10.100.1.171', REGISTRY ) {
-                        dockerImage = docker.build( "${IMAGE}:${IMAGE_VERSION}" )
+                        dockerImage = docker.build("${env.IMAGE}:${env.IMAGE_TAG}")
                         dockerImage.push()
                     }
                 }
@@ -41,7 +41,7 @@ pipeline {
                         ]
                 }
                 script {
-                    dockerImage.run("-d -p ${PORT}:${DEFAULT_PORT} --name=${CONTAINER_NAME}")
+                    dockerImage.run("-d -p ${env.PORT}:${env.DEFAULT_PORT} --name=${env.CONTAINER_NAME}")
                 }
             }
         }
@@ -55,22 +55,22 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'curl http://${IP_NODE_AGENT}:${PORT}'
+                    sh 'curl http://${env.IP_NODE_AGENT}:${env.PORT}'
                 }
             }
         }
         stage('Stopping and Remove Container') {
             steps {
                 script {
-                    sh 'docker container stop ${CONTAINER_NAME}'
-                    sh 'docker container rm ${CONTAINER_NAME}'
+                    sh 'docker container stop ${env.CONTAINER_NAME}'
+                    sh 'docker container rm ${env.CONTAINER_NAME}'
                 }
             }
         }
         stage('Remove Docker Image') {
             steps {
                 script {
-                    sh 'docker image rm ${IMAGE}:${IMAGE_TAG}'
+                    sh 'docker image rm ${env.IMAGE}:${env.IMAGE_TAG}'
                 }
             }
         }
